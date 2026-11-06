@@ -1425,10 +1425,10 @@ function genDistricts(){
     }else if(D.type==='rock'){
       bld('white',D.x,D.z,12,10,7);bld('white',D.x,D.z,6,6,6,7,false);bld('spire',D.x+3,D.z-3,.6,.6,14,7,false);
       const dish=new THREE.Mesh(new THREE.TorusGeometry(3,.18,6,32),glowMat(0xbfe6ff));dish.position.set(D.x-2,16,D.z+1);dish.rotation.x=1.1;scene.add(dish);SPIN.push([dish,'z',.6]);
-      for(let t=0;t<150;t++){const x=D.x+R(-95,95),z=D.z+R(-80,80),s=R(3,10);if(own(x,z)&&edgeDist(x,z)>s+3&&roadDist(x,z)>s+3&&!reserved(x,z,s)&&!blockedAt(x,z,s*.8+2))rock('ice',x,z,s);}
+      for(let t=0;t<150;t++){const x=D.x+R(-95,95),z=D.z+R(-80,80),s=R(3,10);if(own(x,z)&&edgeDist(x,z)>s+3&&roadDist(x,z)>s*1.55+6.5&&!reserved(x,z,s*1.4)&&!blockedAt(x,z,s*.8+2))rock('ice',x,z,s);}
     }else if(D.type==='canyon'){
-      for(let t=-1;t<=1.001;t+=.07)for(const side of [-1,1]){const x=D.x+side*(19+Math.sin(t*3+side)*4)+R(-2,2),z=D.z+t*58,s=R(5,9.5);if(!blockedAt(x,z,s*.5))rock('canyon',x,z,s,true,1.4);}
-      for(let t=0;t<80;t++){const x=D.x+R(-90,90),z=D.z+R(-70,70),s=R(3,8);if(own(x,z)&&Math.abs(x-D.x)>30&&edgeDist(x,z)>s+4&&roadDist(x,z)>s+3&&!blockedAt(x,z,s*.8+2))rock('canyon',x,z,s);}
+      for(let t=-1;t<=1.001;t+=.07)for(const side of [-1,1]){const x=D.x+side*(19+Math.sin(t*3+side)*4)+R(-2,2),z=D.z+t*58,s=R(5,9.5);if(roadDist(x,z)>s*1.55+6.5&&!blockedAt(x,z,s*.5))rock('canyon',x,z,s,true,1.4);}
+      for(let t=0;t<80;t++){const x=D.x+R(-90,90),z=D.z+R(-70,70),s=R(3,8);if(own(x,z)&&Math.abs(x-D.x)>30&&edgeDist(x,z)>s+4&&roadDist(x,z)>s*1.55+6.5&&!blockedAt(x,z,s*.8+2))rock('canyon',x,z,s);}
       bld('core',D.x+44,D.z-6,10,8,8);bld('core',D.x+44,D.z-6,5,5,5,8,false);bld('core',D.x-46,D.z+14,8,10,6);
     }else if(D.type==='arena'){
       const mat=bandMat(0x36f9ff,0x07121e,2.1),prof=[[33,0],[33,1.5],[35.5,1.5],[35.5,3],[38,3],[38,4.5],[40.5,4.5],[40.5,0]].map(p=>new THREE.Vector2(p[0],p[1]));
@@ -1465,7 +1465,7 @@ function genDistricts(){
   const beam=new THREE.Mesh(new THREE.CylinderGeometry(1.1,1.1,500,10,1,true),glowMat(0x36f9ff,.3,true));beam.position.set(0,328,0);scene.add(beam);PULSE.push(beam);
   {const halo=new THREE.Mesh(new THREE.TorusGeometry(3.6,.12,6,40),glowMat(0x36f9ff));halo.rotation.x=Math.PI/2;halo.position.y=53.5;scene.add(halo);SPIN.push([halo,'z',.5]);}
   // shore rocks
-  for(let a=0;a<TAU;a+=R(.05,.11)){const r=rIsl(a)-R(4,8),x=Math.sin(a)*r,z=-Math.cos(a)*r;if(roadDist(x,z)>8&&!reserved(x,z,4)&&!blockedAt(x,z,3))rock('shore',x,z,R(2,5));}
+  for(let a=0;a<TAU;a+=R(.05,.11)){const r=rIsl(a)-R(4,8),x=Math.sin(a)*r,z=-Math.cos(a)*r,s=R(2,5);if(roadDist(x,z)>s*1.55+6.5&&!reserved(x,z,4)&&!blockedAt(x,z,3))rock('shore',x,z,s);}
   // uplink pylons
   const py=[];
   for(let t=0;t<900&&py.length<18;t++){const x=R(-260,260),z=R(-260,260),rd=roadDist(x,z);if(rd<6.5||rd>9||edgeDist(x,z)<16||reserved(x,z,3)||blockedAt(x,z,2.5))continue;
